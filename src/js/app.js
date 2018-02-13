@@ -18,7 +18,7 @@ UI.prototype.addBookToList = function(book) {
     <td>${book.title}</td>
     <td>${book.author}</td>
     <td>${book.isbn}</td>
-    <td><a href="#" class="fa fa-remove delete"</a></td>
+    <td><a href="#" class="fa fa-remove delete"><a></td>
   `;
   list.appendChild(row);
 }
@@ -43,6 +43,13 @@ UI.prototype.showAlert = function(message, className) {
   }, 3000);
 }
 
+// Delete Book
+UI.prototype.deleteBook = function (target){
+  if (target.className === 'fa fa-remove delete'){
+    target.parentElement.parentElement.remove();
+  }
+}
+
 // Clear Fields
 UI.prototype.clearFields = function() {
   document.getElementById('title').value = '';
@@ -51,7 +58,7 @@ UI.prototype.clearFields = function() {
 
 }
 
-// Even Listeners
+// Event Listener for addBook
 document.getElementById('book-form').addEventListener('submit', function(e) {
   // Get Form Values
   const title = document.getElementById('title').value,
@@ -80,6 +87,20 @@ document.getElementById('book-form').addEventListener('submit', function(e) {
   }
 
 
+
+  e.preventDefault();
+});
+
+// Event Listener for Delete
+document.getElementById('book-list').addEventListener('click', function(e) {
+  
+  // Instantiate UI
+  const ui = new UI();
+
+  ui.deleteBook(e.target);
+
+  //Show message
+  ui.showAlert('Book Removed!', 'success');
 
   e.preventDefault();
 });
